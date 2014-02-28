@@ -15,7 +15,7 @@ db_connection.exec(<<-SQL
   create table flashcards
   (
     id SERIAL,
-    question  varchar(255),
+    question  varchar(500),
     answer varchar(255)
   );
   SQL
@@ -23,7 +23,7 @@ db_connection.exec(<<-SQL
 
 options = {:col_sep => "\n", :row_sep => "\n\n", :quote_char => "*"}
 CSV.foreach("flash_cards.csv", options) do |row|
-  question = row[0]
+  question = row[0].gsub("'", "''")
   answer = row[1]
 
   db_connection.exec(<<-SQL
@@ -34,11 +34,11 @@ CSV.foreach("flash_cards.csv", options) do |row|
 
 end
 
-results = db_connection.exec("select * from flashcards;") # note that sometimes quotes are enough
+results = db_connection.exec("select question, answer from flashcards;") # note that sometimes quotes are enough
 
 puts "done."
 puts "verifying selection ..."
-puts
+puts results.values
 
 
 
