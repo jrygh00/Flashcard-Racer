@@ -1,4 +1,5 @@
 require 'pg'
+require 'csv'
 
 DATABASE_NAME = 'flashcard_racer'
 
@@ -13,10 +14,36 @@ db_connection.exec("drop table if exists flashcards;")
 db_connection.exec(<<-SQL
   create table flashcards
   (
-    lastname  varchar(255),
-    firstname varchar(255),
-    cohort    varchar(255),
-    phase     int
+    id SERIAL,
+    question  varchar(255),
+    answer varchar(255)
   );
   SQL
 )
+
+options = {:col_sep => "\n", :row_sep => "\n\n", :quote_char => "*"}
+CSV.foreach("flash_cards.csv", options) do |row|
+  question = row[0]
+  answer = row[1]
+
+  db_connection.exec(<<-SQL
+  insert into flashcards (question, answer)
+  values ('#{question}', '#{answer}');
+  SQL
+  )
+
+end
+
+results = db_connection.exec("select * from flashcards;") # note that sometimes quotes are enough
+
+puts "done."
+puts "verifying selection ..."
+puts
+
+
+
+# db_connection.exec(<<-SQL
+#   insert into students
+#   values ('Lubaway', 'Topher', 'Fence Lizard', 14);
+#   SQL
+# )
