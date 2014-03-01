@@ -4,7 +4,7 @@ class FlashcardGame
   attr_reader :player
 
   def initialize(player, length_of_board)
-    @flashcards = Flashcards.factory_create #deck of flashcard objects
+    @flashcards = Flashcard.factory_create #deck of flashcard objects
     @board_length = length_of_board - 1
     @player = Player.new(player)
   end
@@ -20,16 +20,16 @@ class FlashcardGame
   # TODO REFACTOR
   def move_player(result)
     if result
-      if (@current_position + 2) > @board_length
-        @current_position = @board_length
+      if (@player.current_position + 2) > @board_length
+        @player.current_position = @board_length
       else
-        @current_position += 2
+        @player.current_position += 2
       end
     else
-      if (@current_position - 1) < 0
-        @current_position = 0
+      if (@player.current_position - 1) < 0
+        @player.current_position = 0
       else
-        @current_position -= 1
+        @player.current_position -= 1
       end
     end
   end
@@ -42,9 +42,9 @@ end
 
 
 class Player
-  attr_reader :current_position
+  attr_accessor :current_position
 
-  def initialize
+  def initialize(name)
     @name = name
     @current_position = 0
   end
@@ -88,5 +88,16 @@ class Flashcard
 
 end
 
-# p Flashcard.query_all_cards
-p Flashcard.factory_create
+# # p Flashcard.query_all_cards
+# game = FlashcardGame.new("Michael", 10)
+# p game.finished?
+# p game.move_player(true)
+# p game.player.current_position
+# p game.move_player(false)
+# p game.player.current_position
+# p game.move_player(false)
+# p game.move_player(false)
+# p game.player.current_position
+# # p game.player.move_player(false)
+# card = game.get_next_flashcard
+# p card.correct?("kjhsdkjfh")
