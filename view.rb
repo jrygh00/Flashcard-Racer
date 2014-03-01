@@ -64,19 +64,19 @@ end
 
 # Driver code when making class a class of itself.
 
-View.print_board([1,2,3,5], 10)
+# View.print_board([1,2,3,5], 10)
 
-View.print_question("1", "How do I ruby?")
+# View.print_question("1", "How do I ruby?")
 
-View.respond_to_answer("1", false, "With sublime!")
+# View.respond_to_answer("1", false, "With sublime!")
 
-View.print_board([1,2,3,9], 10)
+# View.print_board([1,2,3,9], 10)
 
-View.print_question("1", "Do you know how to use GIT?")
+# View.print_question("1", "Do you know how to use GIT?")
 
-View.respond_to_answer("1", true)
+# View.respond_to_answer("1", true)
 
-View.print_winnner("1")
+# View.print_winnner("1")
 
 # start game
 # define player1

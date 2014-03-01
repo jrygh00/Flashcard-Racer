@@ -2,26 +2,33 @@
 require_relative 'view.rb'
 require_relative 'model.rb'
 
-name = ARGV[0]
+
 
 class Controller
 
   #include is for class level methods
   #extend is for instance level
-  our_game = FlashcardGame.new(name, 10)
+
 
   def game
-
+    name = ARGV[0]
+    length = 10
+    our_game = FlashcardGame.new(name, length)
     game_done = false
     # Loop through until the game is finished, pulling a new card each loop for each player
     #current_player = 0
     until game_done
+
+      racer_positions = []
+      racer_positions << our_game.player.current_position
 
       View.print_board(racer_positions, length)
 
       current_card = our_game.get_next_flashcard
 
       View.print_question(our_game.player.name, current_card.question)
+
+      sleep(3)
       guess = gets.chomp
 
       did_they_get_it = current_card.correct?(guess)

@@ -43,6 +43,7 @@ end
 
 class Player
   attr_accessor :current_position
+  attr_reader :name
 
   def initialize(name)
     @name = name
