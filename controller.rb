@@ -40,6 +40,8 @@ class Controller
       game_done = our_game.finished?
     end
 
+    View.print_winner(our_game.player.name)
+
   end
 
 end
