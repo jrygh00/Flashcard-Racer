@@ -53,7 +53,7 @@ module View
       end
     end
 
-    def print_winnner(player)
+    def print_winner(player)
       puts "Congrats Player #{player}, You have WON!"
       puts "Winner Winner Chicken Dinner!"
       # player is a string
