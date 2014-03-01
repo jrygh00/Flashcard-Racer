@@ -6,13 +6,9 @@ name = ARGV[0]
 
 class controller
 
+  #include is for class level methods
+  #extend is for instance level
   our_game = FlashcardGame.new(name, 10)
-
-  def move_player!(player, absolute_position)
-    # player is the current player
-    # absolute_position could also be the move in integer (ie, -1, 2...)
-    player[player-1] = absolute_position
-  end
 
   def game
 
@@ -21,14 +17,20 @@ class controller
     #current_player = 0
     until game_done
 
+      View.print_board(racer_positions, length)
 
-      print_board(racer_positions, length)
-      #current_card = select_card
       current_card = our_game.get_next_flashcard
 
-      print_question(our_game.player.name, current_card.question)
+      View.print_question(our_game.player.name, current_card.question)
       guess = gets.chomp
-      current_card.correct?(guess)
+
+      did_they_get_it = current_card.correct?(guess)
+
+      View.respond_to_answer(our_game.player.name, did_they_get_it, current_card.answer)
+
+      sleep(2) # possibly use get to make the user press Enter to continue...
+
+      our_game.move_player(did_they_get_it)
 
       # Dealing with ties at a later time?
       # current_player += 1
