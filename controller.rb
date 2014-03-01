@@ -17,7 +17,6 @@ class controller
     #current_player = 0
     until game_done
 
-
       View.print_board(racer_positions, length)
 
       current_card = our_game.get_next_flashcard
@@ -32,7 +31,6 @@ class controller
       sleep(2) # possibly use get to make the user press Enter to continue...
 
       our_game.move_player(did_they_get_it)
-
 
       # Dealing with ties at a later time?
       # current_player += 1
