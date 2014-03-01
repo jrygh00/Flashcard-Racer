@@ -1,45 +1,44 @@
-require 'pg'
-require 'csv'
+module DatabaseConnection
 
-DATABASE_NAME = 'flashcard_racer'
+  require 'pg'
+  require 'csv'
 
-ignore_errors = "/dev/null 2>&1" # this is a little helper for the line below
 
-`createdb #{DATABASE_NAME} #{ignore_errors}`
+  DATABASE_NAME = 'flashcard_racer'
 
-db_connection = PG.connect( dbname: DATABASE_NAME )
+  ignore_errors = "/dev/null 2>&1" # this is a little helper for the line below
 
-db_connection.exec("drop table if exists flashcards;")
+  `createdb #{DATABASE_NAME} #{ignore_errors}`
 
-db_connection.exec(<<-SQL
-  create table flashcards
-  (
-    id SERIAL,
-    question  varchar(500),
-    answer varchar(255)
-  );
-  SQL
-)
+  DB = PG.connect( dbname: DATABASE_NAME )
 
-# Creates the database from flash_card.csv file
-options = {:col_sep => "\n", :row_sep => "\n\n", :quote_char => "*"}
-CSV.foreach("flash_cards.csv", options) do |row|
-  question = row[0].gsub("'", "''")
-  answer = row[1]
+  DB.exec("drop table if exists flashcards;")
 
-  db_connection.exec(<<-SQL
-  insert into flashcards (question, answer)
-  values ('#{question}', '#{answer}');
-  SQL
+  DB.exec(<<-SQL
+    create table flashcards
+    (
+      id SERIAL,
+      question  varchar(500),
+      answer varchar(255)
+    );
+    SQL
   )
 
+  # Creates the database from flash_card.csv file
+  options = {:col_sep => "\n", :row_sep => "\n\n", :quote_char => "*"}
+  CSV.foreach("flash_cards.csv", options) do |row|
+    question = row[0].gsub("'", "''")
+    answer = row[1]
+
+    DB.exec(<<-SQL
+    insert into flashcards (question, answer)
+    values ('#{question}', '#{answer}');
+    SQL
+    )
+
+  end
+
 end
-
-results = db_connection.exec("select question, answer from flashcards;") # note that sometimes quotes are enough
-
-puts "done."
-puts "verifying selection ..."
-p results.values
 
 
 
