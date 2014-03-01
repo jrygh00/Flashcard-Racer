@@ -4,7 +4,7 @@ require_relative 'model.rb'
 
 name = ARGV[0]
 
-class controller
+class Controller
 
   #include is for class level methods
   #extend is for instance level
@@ -43,3 +43,7 @@ class controller
   end
 
 end
+
+my_controller = Controller.new
+
+my_controller.game
