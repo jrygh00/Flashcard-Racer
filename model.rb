@@ -1,19 +1,25 @@
-class FlashcardGame
+require_relative 'setup.rb'
 
-  def initialize
+class FlashcardGame
+  attr_reader :player
+
+  def initialize(player, length_of_board)
     @flashcards = Flashcards.factory_create #deck of flashcard objects
-    @board_length = 10
+    @board_length = length_of_board
+    @player = Player.new(player)
   end
 
   def winner?
-
+    #@board_length == #current player location
   end
 
-  def move_player_forward(spot_qty)
-
+  def finished?
+    @player.position == @board_length
   end
 
-  def move_player_backwards(spot_qty)
+  def move_player(delta_spot_qty)
+    # I: T/F
+    # Do not allow the player move less than 0 or more than board_length
 
   end
 
@@ -28,21 +34,16 @@ end
 class Player
   attr_reader :current_position
 
-  def method_name
+  def initialize
     @name = name
-    @position = 0
+    @current_position = 0
   end
-
-  def assign_player_location(new_position)
-
-  end
-
-  def
 
 end
 
 
 class Flashcards
+  attr_reader :question, :answer
 
   def initialize(question, answer)
     @question = question
@@ -61,19 +62,22 @@ class Flashcards
 
   def query_all_cards
     # Pulls all the cards from the database
-
+    db_connection.exec("select question, answer from flashcards;")
     #cards = []
     #Query
     #cards
   end
 
   #Compare question with users guess
-  def correct?
+  def correct?(guess)
     #Input: user guess
     #Output: true/false
+
+    #
   end
 
 end
 
 
-my_game =
+p player.position #returns current position
+p player.

@@ -21,6 +21,7 @@ db_connection.exec(<<-SQL
   SQL
 )
 
+# Creates the database from flash_card.csv file
 options = {:col_sep => "\n", :row_sep => "\n\n", :quote_char => "*"}
 CSV.foreach("flash_cards.csv", options) do |row|
   question = row[0].gsub("'", "''")
@@ -38,7 +39,7 @@ results = db_connection.exec("select question, answer from flashcards;") # note 
 
 puts "done."
 puts "verifying selection ..."
-puts results.values
+p results.values
 
 
 
