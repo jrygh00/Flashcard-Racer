@@ -17,16 +17,25 @@ class FlashcardGame
     @player.current_position == @board_length
   end
 
+  # TODO REFACTOR
   def move_player(result)
     if result
-      player.@current_position
-
-
+      if (@current_position + 2) > @board_length
+        @current_position = @board_length
+      else
+        @current_position += 2
+      end
+    else
+      if (@current_position - 1) < 0
+        @current_position = 0
+      else
+        @current_position -= 1
+      end
+    end
   end
 
   def get_next_flashcard
-    shuffle!
-    # sample the flashcard array
+    @flashcards.shuffle!.sample
   end
 
 end
@@ -40,6 +49,9 @@ class Player
     @current_position = 0
   end
 
+  def move_forward
+    # TODO Refactor move_player
+  end
 end
 
 
