@@ -23,12 +23,14 @@ class controller
 
 
       print_board(racer_positions, length)
-      #current_card = select_card
+
       current_card = our_game.get_next_flashcard
 
       print_question(our_game.player.name, current_card.question)
       guess = gets.chomp
-      current_card.correct?(guess)
+      did_they_get_it = current_card.correct?(guess)
+      our_game.move_player(did_they_get_it)
+
 
       # Dealing with ties at a later time?
       # current_player += 1
