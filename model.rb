@@ -5,21 +5,22 @@ class FlashcardGame
 
   def initialize(player, length_of_board)
     @flashcards = Flashcards.factory_create #deck of flashcard objects
-    @board_length = length_of_board
+    @board_length = length_of_board - 1
     @player = Player.new(player)
   end
 
   def winner?
-    #@board_length == #current player location
+    # For future use. Multiple players
   end
 
   def finished?
-    @player.position == @board_length
+    @player.current_position == @board_length
   end
 
-  def move_player(delta_spot_qty)
-    # I: T/F
-    # Do not allow the player move less than 0 or more than board_length
+  def move_player(result)
+    if result
+      player.@current_position
+
 
   end
 
@@ -70,8 +71,7 @@ class Flashcard
   def correct?(guess)
     #Input: user guess
     #Output: true/false
-
-    #
+    guess == @answer
   end
 
 end
