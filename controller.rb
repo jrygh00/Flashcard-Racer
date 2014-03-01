@@ -10,9 +10,8 @@ class Controller
   #extend is for instance level
 
 
-  def game
-    name = ARGV[0]
-    length = 10
+  def game(name, length)
+
     our_game = FlashcardGame.new(name, length)
     game_done = false
     # Loop through until the game is finished, pulling a new card each loop for each player
@@ -53,6 +52,10 @@ class Controller
 
 end
 
+name = ARGV[0]
+length = 10
+ARGV.clear
+
 my_controller = Controller.new
 
-my_controller.game
+my_controller.game(name,length)
