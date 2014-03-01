@@ -42,7 +42,8 @@ class Player
 end
 
 
-class Flashcards
+class Flashcard
+  include DatabaseConnection
   attr_reader :question, :answer
 
   def initialize(question, answer)
@@ -51,21 +52,18 @@ class Flashcards
   end
 
   #Turns data into flashcard objects
-  def factory_create # or Generate cards
+  def self.factory_create
     #Input: 2D array of cards [ [question, answer] ]
     #Output: flashcard objects
-
-    # Takes query results from #query_all_cards
-    # self.new
-    # append results to array
+    cards = []
+    Flashcard.query_all_cards.each do |question, answer|
+        cards << self.new(question, answer)
+    end
+    cards
   end
 
-  def query_all_cards
-    # Pulls all the cards from the database
-    db_connection.exec("select question, answer from flashcards;")
-    #cards = []
-    #Query
-    #cards
+  def self.query_all_cards
+    DatabaseConnection::DB.exec("select question, answer from flashcards;").values # note that sometimes quotes are enough
   end
 
   #Compare question with users guess
@@ -78,6 +76,5 @@ class Flashcards
 
 end
 
-
-p player.position #returns current position
-p player.
+# p Flashcard.query_all_cards
+p Flashcard.factory_create
